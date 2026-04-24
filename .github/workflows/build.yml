@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: Hosted-by-Nonk/caddy-docker-proxy
+  IMAGE_NAME: hosted-by-nonk/caddy-docker-proxy
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -45,7 +45,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: daily
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:daily
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
