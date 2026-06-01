@@ -2,7 +2,7 @@ name: Build and publish the Docker image
 
 on:
   push:
-    tags: [ v* ]
+    tags: ["*"]
 
 env:
   REGISTRY: ghcr.io
@@ -15,7 +15,7 @@ concurrency:
 jobs:
   build:
     name: Build & publish
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
@@ -47,6 +47,8 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            CADDY_VERSION=${{ github.ref_name }}
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v4
         with:
